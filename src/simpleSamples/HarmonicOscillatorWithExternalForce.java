@@ -23,37 +23,41 @@ public class HarmonicOscillatorWithExternalForce {
         double x0 = 1.;
         double v0 = 0.;
         double omega = 1.;// k/mに相当
-        double r = 1.01;
-        double gamma = Math.sqrt(omega) * r;
+//        double r = 1.01;
         double beta = 0.;
         double f = .1;
         double h = 1.e-02;
 
-        DoubleFunction<Double> exForce = (double t) -> {
-            return f * Math.cos(gamma * t + beta);
-        };
+        double rArray[] = {1.1, 1.01};
 
-        DifferentialEquations eq = (double t, double[] yy) -> {
-            double dy[] = new double[2];
-            dy[0] = yy[1];// dx/dt = v
-            // dv/dt = - omega^2 x + exF(t)
-            dy[1] = -omega * omega * yy[0] + exForce.apply(t);
-            return dy;
-        };
-        //出力ファイル名指定：クラス名.txt
-        String filename
-                = HarmonicOscillatorWithExternalForce.class.getSimpleName()
-                + "-" + String.valueOf(r) + ".txt";
-        double t = 0;
-        double tmax = 200;
-        //出力を開く
-        try ( PrintStream out = new PrintStream(new FileOutputStream(filename))) {
-            double yy[] = {x0, v0};
-            while (t < tmax) {
-                yy = RungeKutta.rk4(t, yy, h, eq);
-                t += h;
-                //tとyy[0]をスペース区切りで出力
-                out.println(t + " " + yy[0]);
+        for (double r : rArray) {
+            double gamma = Math.sqrt(omega) * r;
+            DoubleFunction<Double> exForce = (double t) -> {
+                return f * Math.cos(gamma * t + beta);
+            };
+
+            DifferentialEquations eq = (double t, double[] yy) -> {
+                double dy[] = new double[2];
+                dy[0] = yy[1];// dx/dt = v
+                // dv/dt = - omega^2 x + exF(t)
+                dy[1] = -omega * omega * yy[0] + exForce.apply(t);
+                return dy;
+            };
+            //出力ファイル名指定：クラス名.txt
+            String filename
+                    = HarmonicOscillatorWithExternalForce.class.getSimpleName()
+                    + "-" + String.valueOf(r) + ".txt";
+            double t = 0;
+            double tmax = 200;
+            //出力を開く
+            try (PrintStream out = new PrintStream(new FileOutputStream(filename))) {
+                double yy[] = {x0, v0};
+                while (t < tmax) {
+                    yy = RungeKutta.rk4(t, yy, h, eq);
+                    t += h;
+                    //tとyy[0]をスペース区切りで出力
+                    out.println(t + " " + yy[0]);
+                }
             }
         }
 

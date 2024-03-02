@@ -50,7 +50,7 @@ public class CoupledOscillators {
                     out.println(t + " " + (yy[0] + b) + " "
                             + (yy[2] + 2 * b) + " " + (yy[4] + 3 * b));
                     //各調和振動を出力
-                    out2.println(t + "  "
+                    out2.println(t + " "
                             + (-Math.sqrt(2) * (yy[0] - yy[4]) / 2 + b) + " "
                             + ((yy[0] - Math.sqrt(2) * yy[2] + yy[4]) / 2 + 2 * b) + " "
                             + ((yy[0] + Math.sqrt(2) * yy[2] + yy[4]) / 2 + 3 * b));
