@@ -1,6 +1,7 @@
 nbproject/private/
 dist/
 build/
+__pychache__/
 *.py
 *.txt
 *.pdf
