@@ -1,6 +1,4 @@
-nbproject/private/
-dist/
-build/
+target/
 __pychache__/
 *.py
 *.txt
